@@ -1,0 +1,41 @@
+name: CI Build
+
+"on":
+  push:
+    branches:
+      - main
+      - feature/github_actions
+  pull_request:
+    branches:
+      - main
+
+permissions: write-all
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Run (Linux)
+        if: runner.os == 'Linux'
+        run: ./build/hello_world
+
+      - name: Run (Windows)
+        if: runner.os == 'Windows'
+        run: .\build\Release\hello_world.exe

@@ -2,12 +2,9 @@ name: CI Build
 
 "on":
   push:
-    branches:
-      - main
-      - feature/github_actions
+    branches: [ main, feature/github_actions ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 permissions: write-all
 
@@ -18,9 +15,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-          - windows-latest
+        os: [ ubuntu-latest, windows-latest ]
+
+    defaults:
+      run:
+        working-directory: lab1       
 
     steps:
       - name: Checkout

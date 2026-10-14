@@ -5,13 +5,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(hello_world
-    src/main.cpp
-    src/lib.cpp
+    code/main.cpp
+    code/lib.cpp
 )
 
-target_include_directories(hello_world PRIVATE src)
+target_include_directories(hello_world PRIVATE code)
 
-# Прокидываем версию в код как макрос
 target_compile_definitions(hello_world PRIVATE
     APP_VERSION="${PROJECT_VERSION}"
 )
